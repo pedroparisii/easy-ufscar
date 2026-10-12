@@ -13,3 +13,4 @@ next-env.d.ts
 *.md
 docs/
 .claude/
+!README.md

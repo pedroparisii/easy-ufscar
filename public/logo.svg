@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 110" width="320" height="110" role="img" aria-label="Easy UFSCar">
+  <style>
+    text { font: 500 34px "Geist", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif; letter-spacing: -1px; fill: #1c1917; }
+    @media (prefers-color-scheme: dark) { text { fill: #fafaf9; } }
+  </style>
+  <g transform="translate(160 26)">
+    <circle cx="-70" r="9" fill="#3b82f6"/>
+    <circle cx="-42" r="9" fill="#ec4899"/>
+    <circle cx="-14" r="9" fill="#14b8a6"/>
+    <circle cx="14" r="9" fill="#8b5cf6"/>
+    <circle cx="42" r="9" fill="#84cc16"/>
+    <circle cx="70" r="9" fill="#f97316"/>
+  </g>
+  <text x="160" y="88" text-anchor="middle">Easy UFSCar</text>
+</svg>
