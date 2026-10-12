@@ -1,0 +1,3 @@
+# scripts de instalação que não precisam rodar
+allowBuilds:
+  sharp: false

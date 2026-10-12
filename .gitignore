@@ -1,0 +1,15 @@
+node_modules/
+.next/
+.env*
+!.env.example
+
+# capturas de rede e dados brutos (contêm senha, cookie, dados pessoais) — nunca commitar
+*.har
+fixtures/
+*.tsbuildinfo
+next-env.d.ts
+
+# arquivos pessoais: ficam só na máquina
+*.md
+docs/
+.claude/
