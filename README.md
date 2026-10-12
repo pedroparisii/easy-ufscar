@@ -38,22 +38,8 @@ Só o servidor conversa com a UFSCar:
 
 Feito com Next.js, TypeScript, Tailwind e shadcn/ui.
 
-## Rodando na sua máquina
-
-Precisa de Node e [pnpm](https://pnpm.io).
-
-```bash
-pnpm install
-cp .env.example .env.local   # e preencha o SESSION_SECRET (openssl rand -hex 32)
-pnpm dev
-```
-
-Abra http://localhost:3000 e entre com seu RA e senha.
-
-Os testes (`pnpm test`) usam páginas reais salvas do SIGA e do AVA, que não estão no
-repositório por conterem dados pessoais.
-
 ## Achou um problema?
 
 Cada curso e cada professor usa os sistemas de um jeito, então é bem possível que algo
-apareça errado pra você. Abra uma issue contando o que viu (sem colar dados pessoais).
+apareça errado pra você. Abra uma issue contando o problema que viu e fique a vontade 
+caso queira contribuir com o projeto.
