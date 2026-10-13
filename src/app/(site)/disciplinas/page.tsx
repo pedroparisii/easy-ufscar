@@ -30,7 +30,7 @@ export default function Disciplinas() {
             <Link
               key={d.id}
               href={`/disciplinas/${d.id}`}
-              className="flex flex-col rounded-xl border bg-card p-4 transition-colors hover:bg-accent/60"
+              className="flex min-w-0 flex-col rounded-xl border bg-card p-4 transition-colors hover:bg-accent/60"
             >
               <div className="flex items-start gap-3">
                 <Icone icone={iconeDisciplina(d.nome)} cor={cor(painel, d.id)} />

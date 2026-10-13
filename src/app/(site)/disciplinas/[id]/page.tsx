@@ -54,7 +54,7 @@ export default function Disciplina() {
                   <div key={h.dia + h.inicio} className="flex items-baseline gap-3 px-4 py-3 text-sm">
                     <p className="w-9 shrink-0 font-medium">{h.dia}</p>
                     <p className="num flex-1">{h.inicio}–{h.fim}</p>
-                    {h.local && <p className="truncate text-xs text-muted-foreground">{h.local}</p>}
+                    {h.local && <p className="min-w-0 truncate text-xs text-muted-foreground">{h.local}</p>}
                   </div>
                 ))}
               </Lista>
