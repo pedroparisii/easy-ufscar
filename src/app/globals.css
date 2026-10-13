@@ -119,3 +119,8 @@
 @utility hatch {
   background-image: repeating-linear-gradient(135deg, var(--foreground) 0 2px, transparent 2px 5px);
 }
+
+/* a onda das bolinhas no nome do site (components/nav.tsx) */
+@keyframes pulo {
+  40% { transform: translateY(-3px); }
+}

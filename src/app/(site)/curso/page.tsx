@@ -32,6 +32,10 @@ export default function Curso() {
   // as optativas em curso entram no primeiro grupo de optativas da grade
   const primeiraOptativa = h.integralizacao.find((i) => i.item.toLowerCase().startsWith("optativa"))?.item;
 
+  // o SIGA dá quatro médias; as "Aprovadas" quase sempre repetem as "Total", então ficam só estas
+  const todas = Object.entries(h.medias);
+  const medias = todas.some(([nome]) => /total/i.test(nome)) ? todas.filter(([nome]) => /total/i.test(nome)) : todas;
+
   const semestres = Object.entries(Object.groupBy(h.disciplinas, (d) => d.periodo)).sort(([a], [b]) => b.localeCompare(a));
   const faltam = Object.entries(Object.groupBy(painel.faltantes, (f) => f.perfil ?? 0)).sort(([a], [b]) => Number(a) - Number(b));
 
@@ -79,17 +83,22 @@ export default function Curso() {
       </div>
 
       <Secao titulo="Médias">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {h.ira != null && (
-            <div className="rounded-xl border bg-card p-4">
-              <p className="num text-xl">{h.ira.toLocaleString("pt-BR")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">IRA (de 0 a 20.000)</p>
+            <div className="col-span-2 flex items-center justify-between gap-3 rounded-xl border bg-card p-4 sm:col-span-1">
+              <div>
+                <p className="num text-xl">{h.ira.toLocaleString("pt-BR")}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  IRA · <span style={{ color: faixaDoIra(h.ira).cor }}>{faixaDoIra(h.ira).texto}</span>
+                </p>
+              </div>
+              <Medidor ira={h.ira} />
             </div>
           )}
-          {Object.entries(h.medias).map(([nome, valor]) => (
+          {medias.map(([nome, valor]) => (
             <div key={nome} className="rounded-xl border bg-card p-4">
               <p className="num text-xl">{valor.toLocaleString("pt-BR", { maximumFractionDigits: 2 })}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{nome.replace(/^Média /, "")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{nome.replace(/^Média /, "").replace(/ Total$/, "")}</p>
             </div>
           ))}
         </div>
@@ -144,6 +153,41 @@ export default function Curso() {
         )}
       </Secao>
     </>
+  );
+}
+
+// 12.000 é o IRA de quem tem média 6, a nota de aprovação: dali pra cima é verde
+const FAIXAS = [
+  { de: 0, ate: 8000, cor: "var(--late)", texto: "baixo" },
+  { de: 8000, ate: 10000, cor: "#f97316", texto: "abaixo da média" },
+  { de: 10000, ate: 12000, cor: "#eab308", texto: "perto da média" },
+  { de: 12000, ate: 20000, cor: "var(--done)", texto: "acima da média" },
+];
+const faixaDoIra = (ira: number) => FAIXAS.find((x) => ira < x.ate) ?? FAIXAS[3]!;
+
+/** A escala do IRA num arco fino: as quatro faixas apagadas, a do aluno acesa e um ponto no valor dele. */
+function Medidor({ ira }: { ira: number }) {
+  const parte = Math.min(1, Math.max(0, ira / 20000));
+  const atual = faixaDoIra(ira);
+  const angulo = Math.PI * (1 - parte);
+  return (
+    <svg viewBox="0 0 48 28" className="w-11 shrink-0" aria-hidden>
+      {FAIXAS.map((x) => (
+        <path
+          key={x.de}
+          d="M4 24 A20 20 0 0 1 44 24"
+          fill="none"
+          stroke={x.cor}
+          strokeWidth="3.5"
+          opacity={x === atual ? 1 : 0.25}
+          pathLength={100}
+          // cada faixa ocupa o seu pedaço do arco, com um respiro entre elas
+          strokeDasharray={`${(x.ate - x.de) / 200 - 2} 200`}
+          strokeDashoffset={-(x.de / 200 + 1)}
+        />
+      ))}
+      <circle cx={24 + 20 * Math.cos(angulo)} cy={24 - 20 * Math.sin(angulo)} r="3.5" fill={atual.cor} strokeWidth="2" className="stroke-card" />
+    </svg>
   );
 }
 

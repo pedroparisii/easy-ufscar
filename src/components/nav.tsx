@@ -49,7 +49,19 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-4xl items-center gap-6 px-4">
-        <Link href="/" className="font-medium tracking-tight">Easy UFSCar</Link>
+        <Link href="/" className="group flex flex-col gap-1 leading-none font-medium tracking-tight">
+          {/* as bolinhas das disciplinas; no hover passam uma onda, uma depois da outra */}
+          <span className="flex gap-[3px]" aria-hidden>
+            {[1, 2, 3, 4, 5,6 ].map((i) => (
+              <span
+                key={i}
+                className="size-1 rounded-full group-hover:animate-[pulo_0.5s_ease-in-out]"
+                style={{ background: `var(--d${i})`, animationDelay: `${(i - 1) * 60}ms` }}
+              />
+            ))}
+          </span>
+          Easy UFSCar
+        </Link>
         <nav className="hidden gap-1 sm:flex">
           {TELAS.map((t) => (
             <Link
@@ -109,11 +121,11 @@ export function BottomNav() {
             key={t.href}
             href={t.href}
             className={cn(
-              "flex h-14 flex-col items-center justify-center gap-1 text-xs text-muted-foreground",
+              "flex py-2.5 flex-col items-center justify-center gap-1 text-[13px] text-muted-foreground",
               ativa(t.href) && "font-medium text-foreground",
             )}
           >
-            <t.icone className="size-5" strokeWidth={ativa(t.href) ? 2.25 : 1.75} />
+            <t.icone className="size-4" strokeWidth={ativa(t.href) ? 2.25 : 1.75} />
             {t.nome}
           </Link>
         ))}
